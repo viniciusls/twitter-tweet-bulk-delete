@@ -1,0 +1,28 @@
+{
+  "name": "twitter-tweet-bulk-delete",
+  "version": "1.0.0",
+  "description": "Service to read a Twitter history file and delete all tweets matching a given condition usigin Twitter API",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha --recursive ./tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viniciusls/twitter-tweet-bulk-delete.git"
+  },
+  "keywords": [
+    "twitter",
+    "tweet",
+    "removal",
+    "delete",
+    "cleanup",
+    "bulk",
+    "service"
+  ],
+  "author": "Vinícius Silva <vinicius.ls@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viniciusls/twitter-tweet-bulk-delete/issues"
+  },
+  "homepage": "https://github.com/viniciusls/twitter-tweet-bulk-delete#readme"
+}
