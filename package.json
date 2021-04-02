@@ -24,5 +24,19 @@
   "bugs": {
     "url": "https://github.com/viniciusls/twitter-tweet-bulk-delete/issues"
   },
-  "homepage": "https://github.com/viniciusls/twitter-tweet-bulk-delete#readme"
+  "homepage": "https://github.com/viniciusls/twitter-tweet-bulk-delete#readme",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.23.0",
+    "mocha": "^8.3.2",
+    "sinon": "^10.0.0",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
+  }
 }
