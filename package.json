@@ -25,6 +25,9 @@
     "url": "https://github.com/viniciusls/twitter-tweet-bulk-delete/issues"
   },
   "homepage": "https://github.com/viniciusls/twitter-tweet-bulk-delete#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "dotenv": "^8.2.0",
     "twitter": "^1.7.1",
