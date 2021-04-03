@@ -9,6 +9,10 @@ class TwitterFileStub {
       .returns(Promise.resolve(''));
 
     read.withArgs('tweet-wrong-format.js')
+      .returns(Promise.resolve('abcde')
+      );
+
+    read.withArgs('tweet.js')
       .returns(Promise.resolve([{
           "tweet": {
             "retweeted": false,
