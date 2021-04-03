@@ -5,4 +5,4 @@
 ![GitHub](https://img.shields.io/github/license/viniciusls/twitter-tweet-bulk-delete)
 
 
-Service to read a Twitter history file and delete all tweets matching a given condition usigin Twitter Node module.
+Service to read a Twitter history file and delete all tweets matching a given condition using Twitter Node module.
