@@ -20,6 +20,12 @@ class TweetHandler {
    * @returns {Promise<void>}
    */
   async delete(filePath, date, number) {
+    const { file, cutOffDate, maxDeleteNumber } = await this.validate(filePath, date, number);
+
+    return true;
+  }
+
+  async validate(filePath, date, number) {
     if (!filePath) {
       throw new TypeError('Empty file path for tweet.js file passed');
     }
@@ -42,7 +48,7 @@ class TweetHandler {
       throw new TypeError('Invalid number of tweets to delete passed');
     }
 
-    return true;
+    return { file, cutOffDate, maxDeleteNumber };
   }
 }
 
