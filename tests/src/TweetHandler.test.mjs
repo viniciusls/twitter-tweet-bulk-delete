@@ -17,26 +17,18 @@ chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
 describe('Tests for TweetHandler', () => {
-  let tweetHandler;
+  let tweetHandler, twitterFileStub;
 
   before(() => {
     tweetHandler = new TweetHandler();
+
+    twitterFileStub = new TwitterFileStub();
+
+    twitterFileStub.read();
   });
 
   describe('the delete function', () => {
     describe('filePath parameter validation', () => {
-      let twitterFileStub, readStub;
-
-      before(() => {
-        twitterFileStub = new TwitterFileStub();
-
-        readStub = twitterFileStub.read();
-      });
-
-      beforeEach(() => {
-        readStub.resetHistory();
-      });
-
       it('it should fail if filePath is empty', async () => {
         const actualData = {
           filePath: '',
@@ -88,16 +80,12 @@ describe('Tests for TweetHandler', () => {
           .be
           .rejectedWith(EmptyFileError);
       });
-
-      afterEach(() => {
-        readStub.restore();
-      });
     });
 
     describe('date parameter validation', () => {
       it('it should fail if date is NaN', async () => {
         const actualData = {
-          filePath: './test',
+          filePath: 'tweet.js',
           date: 'a',
           number: '1'
         }
@@ -110,7 +98,7 @@ describe('Tests for TweetHandler', () => {
 
       it('it should fail with TypeError if date is NaN', async () => {
         const actualData = {
-          filePath: './test',
+          filePath: 'tweet.js',
           date: 'a',
           number: '1'
         }
@@ -125,7 +113,7 @@ describe('Tests for TweetHandler', () => {
     describe('number parameter validation', () => {
       it('it should fail if number is NaN', async () => {
         const actualData = {
-          filePath: './test',
+          filePath: 'tweet.js',
           date: '2021-01-01',
           number: 'a'
         }
@@ -138,7 +126,7 @@ describe('Tests for TweetHandler', () => {
 
       it('it should fail with TypeError if number is NaN', async () => {
         const actualData = {
-          filePath: './test',
+          filePath: 'tweet.js',
           date: '2021-01-01',
           number: 'a'
         }
