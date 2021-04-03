@@ -7,7 +7,8 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 // Classes
-import {TweetHandler} from "../../src/TweetHandler.mjs";
+import { TweetHandler } from "../../src/TweetHandler.mjs";
+import { TwitterFileStub } from "../helpers/stubs/lib/TwitterFile.stub.mjs";
 
 // Configs
 chai.should();
@@ -22,66 +23,104 @@ describe('Tests for TweetHandler', () => {
   });
 
   describe('the delete function', () => {
-    it('it should fail if date is NaN', async () => {
-      const actualData = {
-        filePath: './test',
-        date: 'a',
-        number: '1'
-      }
+    describe('filePath parameter validation', () => {
+      let twitterFileStub, readStub;
 
-      await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
-        .to
-        .be
-        .rejectedWith('Invalid start date to delete passed');
+      before(() => {
+        twitterFileStub = new TwitterFileStub();
 
-      await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
-        .to
-        .be
-        .rejectedWith(TypeError);
+        readStub = twitterFileStub.read();
+      });
+
+      beforeEach(() => {
+        readStub.resetHistory();
+      });
+
+      it('it should fail if filePath is empty', async () => {
+        const actualData = {
+          filePath: '',
+          date: 'a',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith('Empty file path for tweet.js file passed');
+      });
+
+      it('it should fail with TypeError if filePath is empty', async () => {
+        const actualData = {
+          filePath: '',
+          date: 'a',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith(TypeError);
+      });
+
+      afterEach(() => {
+        readStub.restore();
+      });
     });
 
-    it('it should fail with TypeError if date is NaN', async () => {
-      const actualData = {
-        filePath: './test',
-        date: 'a',
-        number: '1'
-      }
+    describe('date parameter validation', () => {
+      it('it should fail if date is NaN', async () => {
+        const actualData = {
+          filePath: './test',
+          date: 'a',
+          number: '1'
+        }
 
-      await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
-        .to
-        .be
-        .rejectedWith(TypeError);
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith('Invalid start date to delete passed');
+      });
+
+      it('it should fail with TypeError if date is NaN', async () => {
+        const actualData = {
+          filePath: './test',
+          date: 'a',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith(TypeError);
+      });
     });
 
-    it('it should fail if number is NaN', async () => {
-      const actualData = {
-        filePath: './test',
-        date: '2021-01-01',
-        number: 'a'
-      }
+    describe('number parameter validation', () => {
+      it('it should fail if number is NaN', async () => {
+        const actualData = {
+          filePath: './test',
+          date: '2021-01-01',
+          number: 'a'
+        }
 
-      await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
-        .to
-        .be
-        .rejectedWith('Invalid number of tweets to delete passed');
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith('Invalid number of tweets to delete passed');
+      });
 
-      await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
-        .to
-        .be
-        .rejectedWith(TypeError);
-    });
+      it('it should fail with TypeError if number is NaN', async () => {
+        const actualData = {
+          filePath: './test',
+          date: '2021-01-01',
+          number: 'a'
+        }
 
-    it('it should fail with TypeError if number is NaN', async () => {
-      const actualData = {
-        filePath: './test',
-        date: '2021-01-01',
-        number: 'a'
-      }
-
-      await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
-        .to
-        .be
-        .rejectedWith(TypeError);
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith(TypeError);
+      });
     });
   });
 })

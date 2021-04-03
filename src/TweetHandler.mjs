@@ -1,11 +1,14 @@
 import fs from 'node:fs/promises';
 import { TwitterConnector } from '../lib/TwitterConnector.mjs';
+import { TwitterFile } from "../lib/TwitterFile.mjs";
 
 class TweetHandler {
   #connector;
+  #fileHandler;
 
   constructor() {
     this.#connector = new TwitterConnector().twitter;
+    this.#fileHandler = new TwitterFile();
   }
 
   /**
@@ -16,6 +19,11 @@ class TweetHandler {
    * @returns {Promise<void>}
    */
   async delete(filePath, date, number) {
+    if (!filePath) {
+      throw new TypeError('Empty file path for tweet.js file passed');
+    }
+
+    const file = await this.#fileHandler.read(filePath);
     const cutOffDate = Date.parse(date);
 
     if (isNaN(cutOffDate)) {
