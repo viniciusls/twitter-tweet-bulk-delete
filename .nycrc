@@ -1,0 +1,9 @@
+{
+  "all": true,
+  "include": [
+    "lib/**/*.mjs",
+    "src/**/*.mjs"
+  ],
+  "exclude": [
+  ]
+}
