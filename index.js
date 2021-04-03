@@ -1,5 +1,8 @@
 require('dotenv').config();
 
+import { TweetHandler } from "./src/TweetHandler.mjs";
+
+const tweetHandler = new TweetHandler();
 const yargs = require('yargs');
 
 async function main() {
@@ -19,6 +22,14 @@ async function main() {
     .help('h')
     .alias('h', 'help')
     .argv;
+
+  try {
+    const result = await tweetHandler.delete(argv.f, argv.d, argv.n);
+
+    console.log(result);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 main();
