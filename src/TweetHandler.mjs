@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { EmptyFileError } from "../exceptions/EmptyFileError.mjs";
 import { TwitterConnector } from '../lib/TwitterConnector.mjs';
 import { TwitterFile } from "../lib/TwitterFile.mjs";
 
@@ -24,6 +25,11 @@ class TweetHandler {
     }
 
     const file = await this.#fileHandler.read(filePath);
+
+    if (!file.length) {
+      throw new EmptyFileError('Empty tweet.js file passed');
+    }
+
     const cutOffDate = Date.parse(date);
 
     if (isNaN(cutOffDate)) {

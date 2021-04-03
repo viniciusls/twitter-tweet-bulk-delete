@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 // Classes
+import { EmptyFileError } from "../../exceptions/EmptyFileError.mjs";
 import { TweetHandler } from "../../src/TweetHandler.mjs";
 import { TwitterFileStub } from "../helpers/stubs/lib/TwitterFile.stub.mjs";
 
@@ -39,7 +40,7 @@ describe('Tests for TweetHandler', () => {
       it('it should fail if filePath is empty', async () => {
         const actualData = {
           filePath: '',
-          date: 'a',
+          date: '2021-01-01',
           number: '1'
         }
 
@@ -52,7 +53,7 @@ describe('Tests for TweetHandler', () => {
       it('it should fail with TypeError if filePath is empty', async () => {
         const actualData = {
           filePath: '',
-          date: 'a',
+          date: '2021-01-01',
           number: '1'
         }
 
@@ -60,6 +61,32 @@ describe('Tests for TweetHandler', () => {
           .to
           .be
           .rejectedWith(TypeError);
+      });
+
+      it('it should fail if file is empty', async () => {
+        const actualData = {
+          filePath: 'tweet-empty.js',
+          date: '2021-01-01',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith('Empty tweet.js file passed');
+      });
+
+      it('it should fail with EmptyFileError if file is empty', async () => {
+        const actualData = {
+          filePath: 'tweet-empty.js',
+          date: '2021-01-01',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith(EmptyFileError);
       });
 
       afterEach(() => {
