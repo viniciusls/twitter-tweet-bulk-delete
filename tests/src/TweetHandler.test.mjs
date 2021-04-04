@@ -10,6 +10,7 @@ import sinonChai from 'sinon-chai';
 import { EmptyFileError } from "../../exceptions/EmptyFileError.mjs";
 import { TweetHandler } from "../../src/TweetHandler.mjs";
 import { TwitterFileStub } from "../helpers/stubs/lib/TwitterFile.stub.mjs";
+import {InvalidFileExtensionError} from "../../exceptions/InvalidFileExtensionError.mjs";
 
 // Configs
 chai.should();
@@ -53,6 +54,32 @@ describe('Tests for TweetHandler', () => {
           .to
           .be
           .rejectedWith(TypeError);
+      });
+
+      it('it should fail if filePath is not a JavaScript file', async () => {
+        const actualData = {
+          filePath: 'tweet.bat',
+          date: '2021-01-01',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith('File path should be for a tweet.js (or any JavaScript file)');
+      });
+
+      it('it should fail with InvalidFileExtensionError if filePath is not a JavaScript file', async () => {
+        const actualData = {
+          filePath: 'tweet.bat',
+          date: '2021-01-01',
+          number: '1'
+        }
+
+        await chai.expect(tweetHandler.delete(actualData.filePath, actualData.date, actualData.number))
+          .to
+          .be
+          .rejectedWith(InvalidFileExtensionError);
       });
 
       it('it should fail if file is empty', async () => {

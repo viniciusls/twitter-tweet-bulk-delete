@@ -1,5 +1,7 @@
 import fs from 'node:fs/promises';
+import { extname } from 'path';
 import { EmptyFileError } from "../exceptions/EmptyFileError.mjs";
+import { InvalidFileExtensionError } from "../exceptions/InvalidFileExtensionError.mjs";
 import { TwitterConnector } from '../lib/TwitterConnector.mjs';
 import { TwitterFile } from "../lib/TwitterFile.mjs";
 
@@ -28,6 +30,10 @@ class TweetHandler {
   async validate(filePath, date, number) {
     if (!filePath) {
       throw new TypeError('Empty file path for tweet.js file passed');
+    }
+
+    if (extname(filePath) !== '.js') {
+      throw new InvalidFileExtensionError('File path should be for a tweet.js (or any JavaScript file)');
     }
 
     const file = await this.#fileHandler.read(filePath);
