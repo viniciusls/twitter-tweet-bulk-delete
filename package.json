@@ -4,7 +4,8 @@
   "description": "Service to read a Twitter history file and delete all tweets matching a given condition using Twitter API",
   "main": "index.js",
   "scripts": {
-    "test": "npx c8 mocha --recursive ./tests"
+    "test": "npx c8 mocha --recursive ./tests",
+    "test-cov": "npx c8 --reporter=text-lcov mocha --recursive ./tests | npx coveralls"
   },
   "repository": {
     "type": "git",
