@@ -1,4 +1,3 @@
-import fs from 'node:fs/promises';
 import { extname } from 'path';
 import { EmptyFileError } from "../exceptions/EmptyFileError.mjs";
 import { InvalidFileExtensionError } from "../exceptions/InvalidFileExtensionError.mjs";
